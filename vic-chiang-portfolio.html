@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>蔣曜宇 Vic Chiang — Selected Articles & Essays</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1a18;
+    --ink-muted: #6b6b65;
+    --ink-faint: #9e9e96;
+    --rule: #d4d2c8;
+    --bg: #f7f5f0;
+    --accent: #b84c1e;
+    --accent-muted: #e8c4b2;
+    --serif: 'Libre Baskerville', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+  }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  .header {
+    padding: 3.5rem 3rem 2.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .header h1 {
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .header .descriptor {
+    margin-top: 0.6rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .filters {
+    padding: 1.5rem 3rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    border-bottom: 1px solid var(--rule);
+    flex-wrap: wrap;
+  }
+  .filter-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+    margin-right: 0.5rem;
+  }
+  .filter-btn {
+    background: none;
+    border: 1px solid var(--rule);
+    padding: 0.3rem 0.85rem;
+    border-radius: 2rem;
+    font-size: 0.75rem;
+    font-family: var(--sans);
+    color: var(--ink-muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .filter-btn:hover { border-color: var(--ink-muted); color: var(--ink); }
+  .filter-btn.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+  .articles-section {
+    padding: 0 3rem 4rem;
+  }
+  .articles-count {
+    padding: 1.5rem 0 0.5rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .article-item {
+    display: grid;
+    grid-template-columns: 90px 1fr 160px;
+    gap: 0 2rem;
+    align-items: start;
+    padding: 1.6rem 0;
+    border-bottom: 1px solid var(--rule);
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.12s;
+    cursor: pointer;
+  }
+  .article-item:hover { background: rgba(0,0,0,0.02); margin: 0 -1.5rem; padding-left: 1.5rem; padding-right: 1.5rem; }
+
+  .article-year {
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.06em;
+    padding-top: 0.2rem;
+    text-align: right;
+  }
+
+  .article-title {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.45;
+    color: var(--ink);
+    margin-bottom: 0.35rem;
+  }
+  .article-item:hover .article-title { color: var(--accent); }
+  .article-lang {
+    display: inline-block;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--accent-muted);
+    color: var(--accent);
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+    margin-bottom: 0.4rem;
+    font-family: var(--sans);
+    font-weight: 500;
+  }
+
+  .article-outlet {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-top: 0.2rem;
+    gap: 0.25rem;
+  }
+  .outlet-name {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--ink-muted);
+    text-align: right;
+    letter-spacing: 0.02em;
+  }
+  .outlet-tag {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+  }
+
+  .article-item.hidden { display: none; }
+
+  footer {
+    padding: 2rem 3rem;
+    border-top: 1px solid var(--rule);
+  }
+  footer p {
+    font-size: 0.75rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 640px) {
+    .header { padding: 2rem 1.25rem 1.5rem; }
+    .filters { padding: 1rem 1.25rem; }
+    .articles-section { padding: 0 1.25rem 3rem; }
+    .article-item { grid-template-columns: 60px 1fr; }
+    .article-outlet { display: none; }
+    footer { padding: 1.5rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <h1>蔣曜宇 Vic Chiang</h1>
+  <p class="descriptor">Selected Articles &amp; Essays</p>
+</header>
+
+<div class="filters">
+  <span class="filter-label">Filter</span>
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="wapo">Washington Post</button>
+  <button class="filter-btn" data-filter="initium">端傳媒</button>
+  <button class="filter-btn" data-filter="dw">Deutsche Welle</button>
+  <button class="filter-btn" data-filter="zh">中文</button>
+  <button class="filter-btn" data-filter="en">English</button>
+</div>
+
+<section class="articles-section">
+  <p class="articles-count" id="count">21 articles</p>
+
+  <a class="article-item" href="https://theinitium.com/20260319-international-greenland-at-the-crossroads/" target="_blank" data-outlet="initium" data-lang="zh">
+    <span class="article-year">2026</span>
+    <div class="article-body">
+      <span class="article-lang">中文</span>
+      <p class="article-title">格陵蘭現場：大國凝視下，一個民族的自決困局</p>
+    </div>
+    <div class="article-outlet">
+      <span class="outlet-name">端傳媒</span>
+      <span class="outlet-tag">Initium Media</span>
+    </div>
+  </a>
+
+  <a class="article-item" href="https://theinitium.com/20260414-international-greenland-independence-and-political-deadlock/" target="_blank" data-outlet="initium" data-lang="zh">
+    <span class="article-year">2026</span>
+    <div class="article-body">
+      <span class="article-lang">中文</span>
+      <p class="article-title">冰原上的抉擇：格陵蘭的獨立夢與政治僵局</p>
+    </div>
+    <div class="article-outlet">
+      <span class="outlet-name">端傳媒</span>
+      <span class="outlet-tag">Initium Media</span>
+    </div>
+  </a>
+
+  <a class="article-item" href="https://www.twreporter.org/a/venezuelans-grapple-with-post-maduro-uncertainty" target="_blank" data-outlet="reporter" data-lang="zh">
+    <span class="article-year">2025</span>
+    <div class="article-body">
+      <span class="article-lang">中文</span>
+      <p class="article-title">變天48小時，委內瑞拉人的興奮和擔憂：馬杜洛被捕後，他們期待什麼？</p>
+    </div>
+    <div class="article-outlet">
+      <span class="outlet-name">報導者</span>
+      <span class="outlet-tag">The Reporter</span>
+    </div>
+  </a>
+
+  <a class="article-item" href="https://www.bbc.com/zhongwen/articles/clydrkrzn30o/trad" target="_blank" data-outlet="bbc" data-lang="zh">
+    <span class="article-year">2025</span>
+    <div class="article-body">
+      <span class="article-lang">中文</span>
+      <p class="article-title">特朗普簽《台灣保證實施法案》：對台「制度化」保障，還是對北京的談判籌碼？</p>
+    </div>
+    <div class="article-outlet">
+      <span class="outlet-name">BBC 中文</span>
+      <span class="outlet-tag">BBC Chinese</span>
+    </div>
+  </a>
+
+  <a class="article-item" href="https://www.washingtonpost.com/world/2025/03/26/china-birth-rate-grows-with-support/" target="_blank" data-outlet="wapo" data-lang="en">
+    <span class="article-year">2025</span>
+    <div class="article-body">
+      <p class="article-title">This Chinese city grew its birth rate. It won't be easy to copy.</p>
+    </div>
+    <div class="article-outlet">
+      <span class="outlet-name">Washington Post</span>
+    </div>
+  </a>
+
+  <a class="article-item" href="https://www.washingtonpost.com/world/2024/12/03/china-coffee-starbucks-nestle-labor-violations/" target="_blank" data-outlet="wapo" data-lang="en">
+    <span class="article-year">2024</span>
+    <div class="article-body">
+      <p class="article-title">Starbucks and Nestlé face scrutiny over labor practices in China</p>
+    </div>
+    <div class="article-outlet">
+      <span class="outlet-name">Washington Post</span>
+    </div>
+  </a>
+
+  <a class="article-item" href="https://www.washingtonpost.com/world/2024/08/03/taiwan-china-war-invasion-military-preparedness/" target="_blank" data-outlet="wapo" data-lang="en">
+    <span class="article-year">2024</span>
+    <div class="article-body">
+      <p class="article-title">Taiwan is readying citizens for a Chinese invasion. It's not going well.</p>
+    </div>
+    <div class="article-outlet">
+      <span class="outlet-name">Washington Post</span>
+    </div>
+  </a>
+
+  <a class="article-item" href="https://www.washingtonpost.com/world/2024/04/18/rupaul-drag-race-nymphia-wind-taiwan/" target="_blank" data-outlet="wapo" data-lang="en">
+    <span class="article-year">2024</span>
+    <div class="article-body">
+      <p class="article-title">How a 'RuPaul's Drag Race' finalist became an unlikely ambassador for Taiwan</p>
+    </div>
+    <div class="article-outlet">
+      <span class="outlet-name">Washington Post</span>
+    </div>
+  </a>
+
+  <a class="article-item" href="https://www.washingtonpost.com/world/2024/01/13/taiwan-president-lai-ching-te/" target="_blank" data-outlet="wapo" data-lang="en">
+    <span class="article-year">2024</span>
+    <div class="article-body">
+      <p class="article-title">Taiwan elects Lai Ching-te as president. China calls it a dangerous choice.</p>
+    </div>
+    <div class="article-outlet">
+      <span class="outlet-name">Washington Post</span>
+    </div>
+  </a>
+
+  <a class="article-item" href="https://www.washingtonpost.com/world/2023/11/13/china-biden-xi-meeting-apec-taiwan/" target="_blank" data-outlet="wapo" data-lang="en">
+    <span class="article-year">2023</span>
+    <div class="article-body">
+      <p class="article-title">How Chinese aggression is increasing the risk of war in the Taiwan Strait</p>
+    </div>
+    <div class="article-outlet">
+      <span class="outlet-name">Washington Post</span>
+    </div>
+  </a>
+
+  <a class="article-item" href="https://www.washingtonpost.com/world/2023/07/27/china-taiwan-arbitrary-arrest-prison/" target="_blank" data-outlet="wapo" data-lang="en">
+    <span class="article-year">2023</span>
+    <div class="article-body">
+      <p class="article-title">From salesman to 'spy': An inside account of arbitrary arrest in China</p>
+    </div>
+    <div class="article-outlet">
+      <span class="outlet-name">Washington Post</span>
+    </div>
+  </a>
+
+  <a class="article-item" href="https://www.washingtonpost.com/world/2023/04/18/china-supersonic-drone-taiwan-leaks/" target="_blank" data-outlet="wapo" data-lang="en">
+    <span class="article-year">2023</span>
+    <div class="article-body">
+      <p class="article-title">China readies supersonic spy drone unit, leaked document says</p>
+    </div>
+    <div class="article-outlet">
+      <span class="outlet-name">Washington Post</span>
+    </div>
+  </a>
+
+  <a class="article-item" href="https://www.washingtonpost.com/investigations/2023/01/09/china-crematorium-covid-deaths/" target="_blank" data-outlet="wapo" data-lang="en">
+    <span class="article-year">2023</span>
+    <div class="article-body">
+      <p class="article-title">Satellite images show crowds at China's crematoriums as covid surges</p>
+    </div>
+    <div class="article-outlet">
+      <span class="outlet-name">Washington Post</span>
+    </div>
+  </a>
+
+  <a class="article-item" href="https://www.washingtonpost.com/world/2022/11/05/taiwan-gay-rights-pride-china/" target="_blank" data-outlet="wapo" data-lang="en">
+    <span class="article-year">2022</span>
+    <div class="article-body">
+      <p class="article-title">In Taiwan, Pride is a potent mix of LGBTQ and democratic rights</p>
+    </div>
+    <div class="article-outlet">
+      <span class="outlet-name">Washington Post</span>
+    </div>
+  </a>
+
+  <a class="article-item" href="https://www.washingtonpost.com/world/2022/08/15/china-fashion-trend-cadre-style-economy/" target="_blank" data-outlet="wapo" data-lang="en">
+    <span class="article-year">2022</span>
+    <div class="article-body">
+      <p class="article-title">In China, civil servant chic is the new look for straitened times</p>
+    </div>
+    <div class="article-outlet">
+      <span class="outlet-name">Washington Post</span>
+    </div>
+  </a>
+
+  <a class="article-item" href="https://www.dw.com/zh-hant/%E4%B8%80%E5%B8%B6%E4%B8%80%E8%B7%AF%E4%B8%AD%E5%9C%8B%E5%8B%9E%E5%B7%A5%E5%9C%A8%E5%8D%B0%E5%B0%BC%E7%9A%84%E8%A1%80%E6%B1%97%E4%B8%8D%E6%AD%B8%E8%B7%AF/a-59683850" target="_blank" data-outlet="dw" data-lang="zh">
+    <span class="article-year">2021</span>
+    <div class="article-body">
+      <span class="article-lang">中文</span>
+      <p class="article-title">一帶一路：中國勞工在印尼的血汗不歸路</p>
+    </div>
+    <div class="article-outlet">
+      <span class="outlet-name">Deutsche Welle</span>
+      <span class="outlet-tag">DW 中文</span>
+    </div>
+  </a>
+
+  <a class="article-item" href="https://www.dw.com/en/afghanistan-lgbtq-people-fear-for-their-lives-under-taliban-rule/a-59144208" target="_blank" data-outlet="dw" data-lang="en">
+    <span class="article-year">2021</span>
+    <div class="article-body">
+      <p class="article-title">LGBTQ people fear for their lives under Taliban rule</p>
+    </div>
+    <div class="article-outlet">
+      <span class="outlet-name">Deutsche Welle</span>
+    </div>
+  </a>
+
+  <a class="article-item" href="https://www.dw.com/zh-hant/%E9%A6%AC%E7%A5%96%E6%A5%B5%E5%85%89%E5%85%A9%E5%B2%B8%E5%89%8D%E7%B7%9A%E7%9A%84%E6%BC%81%E6%A5%AD%E8%A7%80%E5%AF%9F/a-59335838" target="_blank" data-outlet="dw" data-lang="zh">
+    <span class="article-year">2021</span>
+    <div class="article-body">
+      <span class="article-lang">中文</span>
+      <p class="article-title">「馬祖極光」：兩岸前線的漁業觀察</p>
+    </div>
+    <div class="article-outlet">
+      <span class="outlet-name">Deutsche Welle</span>
+      <span class="outlet-tag">DW 中文</span>
+    </div>
+  </a>
+
+  <a class="article-item" href="https://www.aljazeera.com/news/2019/12/27/be-my-guest-taiwans-tsai-ing-wen-woos-online-influencers" target="_blank" data-outlet="aljazeera" data-lang="en">
+    <span class="article-year">2019</span>
+    <div class="article-body">
+      <p class="article-title">'Be my guest': Taiwan's Tsai Ing-wen woos online influencers</p>
+    </div>
+    <div class="article-outlet">
+      <span class="outlet-name">Al Jazeera</span>
+    </div>
+  </a>
+
+  <a class="article-item" href="https://theinitium.com/20181016-notes-kosovo-lendi-mustafa/" target="_blank" data-outlet="initium" data-lang="zh">
+    <span class="article-year">2018</span>
+    <div class="article-body">
+      <span class="article-lang">中文</span>
+      <p class="article-title">在信奉伊斯蘭的科索沃，當第一個公開出櫃的跨性別人士</p>
+    </div>
+    <div class="article-outlet">
+      <span class="outlet-name">端傳媒</span>
+      <span class="outlet-tag">Initium Media</span>
+    </div>
+  </a>
+
+</section>
+
+<footer>
+  <p>© 蔣曜宇 Vic Chiang 2026</p>
+</footer>
+
+<script>
+  const items = document.querySelectorAll('.article-item');
+  const countEl = document.getElementById('count');
+  const btns = document.querySelectorAll('.filter-btn');
+
+  function updateCount() {
+    const visible = document.querySelectorAll('.article-item:not(.hidden)').length;
+    countEl.textContent = visible + ' article' + (visible !== 1 ? 's' : '');
+  }
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      items.forEach(item => {
+        if (f === 'all') {
+          item.classList.remove('hidden');
+        } else if (f === 'zh' || f === 'en') {
+          item.classList.toggle('hidden', item.dataset.lang !== f);
+        } else {
+          item.classList.toggle('hidden', item.dataset.outlet !== f);
+        }
+      });
+      updateCount();
+    });
+  });
+</script>
+</body>
+</html>
