@@ -63,6 +63,25 @@
   .outlet-tag { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-faint); }
   .article-item.hidden { display: none; }
 
+  .search-bar {
+    padding: 0.9rem 3rem;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .search-bar svg { width: 15px; height: 15px; color: var(--ink-faint); flex-shrink: 0; }
+  .search-bar input {
+    background: none;
+    border: none;
+    outline: none;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    color: var(--ink);
+    width: 100%;
+  }
+  .search-bar input::placeholder { color: var(--ink-faint); }
+
   footer { padding: 2rem 3rem; border-top: 1px solid var(--rule); }
   footer p { font-size: 0.75rem; color: var(--ink-faint); letter-spacing: 0.04em; }
 
@@ -95,6 +114,13 @@
   <button class="filter-btn" data-filter="dw">Deutsche Welle</button>
   <button class="filter-btn" data-filter="zh">中文</button>
   <button class="filter-btn" data-filter="en">English</button>
+</div>
+
+<div class="search-bar">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+  </svg>
+  <input type="text" id="search-input" placeholder="Search articles…" autocomplete="off">
 </div>
 
 <section class="articles-section">
@@ -400,8 +426,21 @@
   const items = document.querySelectorAll('.article-item');
   const countEl = document.getElementById('count');
   const btns = document.querySelectorAll('.filter-btn');
+  const searchInput = document.getElementById('search-input');
 
-  function updateCount() {
+  let activeFilter = 'all';
+  let searchQuery = '';
+
+  function applyFilters() {
+    items.forEach(item => {
+      const title = item.querySelector('.article-title').textContent.toLowerCase();
+      const matchesSearch = searchQuery === '' || title.includes(searchQuery);
+      const f = activeFilter;
+      let matchesFilter = true;
+      if (f === 'zh' || f === 'en') matchesFilter = item.dataset.lang === f;
+      else if (f !== 'all') matchesFilter = item.dataset.outlet === f;
+      item.classList.toggle('hidden', !(matchesSearch && matchesFilter));
+    });
     const visible = document.querySelectorAll('.article-item:not(.hidden)').length;
     countEl.textContent = visible + ' article' + (visible !== 1 ? 's' : '');
   }
@@ -410,14 +449,14 @@
     btn.addEventListener('click', () => {
       btns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      const f = btn.dataset.filter;
-      items.forEach(item => {
-        if (f === 'all') item.classList.remove('hidden');
-        else if (f === 'zh' || f === 'en') item.classList.toggle('hidden', item.dataset.lang !== f);
-        else item.classList.toggle('hidden', item.dataset.outlet !== f);
-      });
-      updateCount();
+      activeFilter = btn.dataset.filter;
+      applyFilters();
     });
+  });
+
+  searchInput.addEventListener('input', () => {
+    searchQuery = searchInput.value.toLowerCase().trim();
+    applyFilters();
   });
 </script>
 </body>
